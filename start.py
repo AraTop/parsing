@@ -8,11 +8,11 @@ def user_Function():
 
    print("Здравствуй, как ваше имя?")
    name_user = input().title()
-   print(f"{name_user}, очень рад знакомству. \nГотовы познакомится с вакансиями? \nесли да то просто напиши 'ready' или 'r' или 'го', \nесли же нет просто напиши 'no' ")
+   print(f"{name_user}, очень рад знакомству. \nГотовы познакомится с вакансиями? \nесли да то просто напиши '+', \nесли же нет напиши '-' ")
    user_answer = input()
-   if user_answer == "ready" or "r" or "го":
+   if user_answer == "+":
       print("ready")     
-   elif user_answer == "no" or "тщ":
+   elif user_answer == "-":
       print('Приходите в следующий раз')
       return 
 
