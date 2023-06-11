@@ -108,6 +108,26 @@ class Search(Sample):
       elif self.base == "SuperJob":
          return "SuperJob"
 
+class Vacancy:
+  def __init__(self, title , salary , url , experience , requirement , employment):
+   self.title = title
+   self.salary = salary
+   self.url = url
+   self.experience = experience 
+   self.requirement = requirement
+   self.employment = employment
+
+  def __gt__(self, other):
+      "метод для операции сравнения больше"
+      return self.salary > other["price"]
+
+  def __lt__(self,other):
+      "метод для операции сравнения меньше"
+      return self.salary < other["price"]
+  
+  def __str__(self):
+      return f"{self.title}"
+
 class Brain:
    def __init__(self,file,number_list_iteration):
       self.file = file

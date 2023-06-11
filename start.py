@@ -1,14 +1,13 @@
-from main import Search , Brain , JsonFile
+from main import Search , Brain , JsonFile, Vacancy
 
 
 def user_Function():
    # api_key - замепните на свой
    api_key = "v3.r.137576500.e2e95fd182c513c0803ff06264ceec9d568d0b1e.4703138b796b9e79e9efd267b578c0f8a4686e60"
 
-
    print("Здравствуй, как ваше имя?")
    name_user = input().title()
-   print(f"{name_user}, очень рад знакомству. \nГотовы познакомится с вакансиями? \nесли да то просто напиши '+', \nесли же нет напиши '-' ")
+   print(f"{name_user}, очень рад знакомству. \nГотовы познакомится с вакансиями? \nEсли да то просто напиши '+' либо 'enter' \nEсли же нет напиши '-' ")
    user_answer = input()
    if user_answer == "+":
       print("ready")     
@@ -20,10 +19,10 @@ def user_Function():
    user_input = input()
    if int(user_input) == 1:
       search = Search(input("Какой язык искать: "), "HeadHunter")
-   
+         
    elif int(user_input) == 2:
       search = Search(input("Какой язык искать: "), "SuperJob")
-
+         
    if search.HeadHunter_or_SuperJob() == "HeadHunter":
       data = search.head_hunter()
       y = 0
@@ -66,17 +65,21 @@ def user_Function():
             del value['experience']
             print(f"Вакансия под номером {user_input} удалена") 
          y += 1
-      
             
       return data
 
    while True:
-      print("-------------------------------\nХотите удалить из списка какую-то вакансию перед добавлением в Json_File , если да то просто напишите нумерацию одной из вакансий \nесли нет то пишите '-' ")
+      print("-------------------------------\nХотите удалить из списка какую-то вакансию перед добавлением в Json_File? \nEсли да то просто напишите '+' \nесли же нет '-'")
       user_input = input()
       if user_input == "-":
          break
-      else:
+      elif user_input == "+":
+         print("Укажите нумерацию той вакансии которую хотите удалить")
+         user_input = input()
          data = dell_Function(data , int(user_input))
+      else:
+         print("\nНеизвестный знак, выберите среди предложенных")
+
 
    while True:
       print("Хотите сравнить вакансии между собой по зарплате? \nЕсли хотите пишите '+' , если не хотите '-' ")
@@ -114,23 +117,21 @@ def user_Function():
 
          print("\nИз выше перечисленых вакансий выберите нужную указав цифру")
 
-         user_input = input()
-
-         brain1 = Brain(data_hh,int(user_input))
-         brain2 = Brain(data_sj,int(user_input))
+         user_input_number = input()
+         vacancy1 = Vacancy(data_hh[int(user_input_number)]["name"] , data_hh[int(user_input_number)]["price"] , data_hh[int(user_input_number)]["alternate_url"] , data_hh[int(user_input_number)]["experience"] , data_hh[int(user_input_number)]["requirement"] , data_hh[int(user_input_number)]["employment"])
 
          print("Хотите сравнить > или <")
 
          user_input = input()
          if user_input == ">":
-            is_gt = brain1 > brain2
+            is_gt = vacancy1.__gt__(data_sj[int(user_input_number)])
             if is_gt == False:
                print("\nЗарплата на HeadHunter под данным номером меньше чем на SuperJob с таким же номером")
             elif is_gt == True:
                print("\nЗарплата на SuperJob под данным номером меньше чем на HeadHunter с таким же номером")
 
          elif user_input == "<":
-            is_lt = brain1 < brain2
+            is_lt = vacancy1.__lt__(data_sj[int(user_input_number)])
             if is_lt == True:
                 print("\nЗарплата на HeadHunter под данным номером меньше чем на SuperJob с таким же номером")
             elif is_lt == False:
@@ -143,11 +144,17 @@ def user_Function():
 
 
    print("\nВот и все, добавляем готовые данные в Json_File")
-   print("loading...")
-
    print("Придумайте название Json_File")
-   user_input = input()
+   print("loading...")
+   user_name_file = input()
    
+   if user_name_file == "":
+      print("Oops... Вы не указали название файла, название будет стандартным")
+      user1 = JsonFile(data,"file.json")
+      user1.save_to_JSON()
+      print("Все готова, Json_File должен появится, спасибо за уделенное время")
+      return
+      
    user1 = JsonFile(data,user_input)
    user1.save_to_JSON()
    print("Все готова, Json_File должен появится, спасибо за уделенное время")
