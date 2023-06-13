@@ -154,7 +154,7 @@ def user_Function():
       print("Все готова, Json_File должен появится, спасибо за уделенное время")
       return
       
-   user1 = JsonFile(data,user_input)
+   user1 = JsonFile(data,user_name_file)
    user1.save_to_JSON()
    print("Все готова, Json_File должен появится, спасибо за уделенное время")
 
