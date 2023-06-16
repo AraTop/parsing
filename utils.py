@@ -117,15 +117,15 @@ class Vacancy:
    self.employment = employment
 
   def __gt__(self, other):
-      "метод для операции сравнения больше"
-      return self.salary > other
+   "метод для операции сравнения больше"
+   return self.salary > other
   
   def __lt__(self,other):
-      "метод для операции сравнения меньше"
-      return self.salary < other
+   "метод для операции сравнения меньше"
+   return self.salary < other
   
   def __str__(self):
-      return f"{self.title}"
+   return f"{self.title}"
 
 class JsonFile:
    def __init__(self,vacancies, name_file):
